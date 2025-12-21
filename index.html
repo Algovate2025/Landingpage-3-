@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>Private Access Platform</title>
+    <meta name="description" content="Request access to a private digital platform. Limited availability.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Meta Pixel Code -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1423927573068330');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1423927573068330&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel Code -->
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1e3a5f;
+            --primary-dark: #0f1f3a;
+            --secondary: #D4AF37;
+            --accent: #4A90E2;
+            --dark: #0A0E1A;
+            --light: #F7F9FC;
+            --text: #4A5568;
+            --success: #22C55E;
+            --font-heading: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        body {
+            font-family: var(--font-body);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            background: #0A0E1A;
+            background-image:
+                radial-gradient(ellipse 60% 40% at 15% 20%, rgba(212, 175, 55, 0.10), transparent 55%),
+                radial-gradient(ellipse 55% 35% at 85% 30%, rgba(74, 144, 226, 0.10), transparent 60%),
+                radial-gradient(ellipse 70% 45% at 50% 85%, rgba(34, 197, 94, 0.06), transparent 60%);
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Header - minimal auf Mobile */
+        .header {
+            background: rgba(10, 14, 26, 0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 30px rgba(0,0,0,0.4);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.2rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            min-height: 64px;
+        }
+
+        .cta-header {
+            background: linear-gradient(135deg, #1e3a5f, #2a4a7f);
+            color: white;
+            padding: 0.75rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-family: var(--font-body);
+            font-weight: 600;
+            font-size: 0.9rem;
+            letter-spacing: 0.01em;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(30, 58, 95, 0.3);
+            position: fixed;
+            top: 14px;
+            right: 20px;
+            z-index: 9999;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 8rem 2rem 4rem;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            min-height: 100%;
+            background:
+                radial-gradient(ellipse 80% 60% at 20% 35%, rgba(212, 175, 55, 0.12), transparent 55%),
+                radial-gradient(ellipse 70% 55% at 80% 60%, rgba(74, 144, 226, 0.10), transparent 60%),
+                linear-gradient(135deg, rgba(10,14,26,1) 0%, rgba(15,31,58,1) 45%, rgba(30,58,95,1) 100%);
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: 
+                linear-gradient(135deg, rgba(10, 14, 26, 0.95) 0%, rgba(15, 31, 58, 0.85) 40%, rgba(30, 58, 95, 0.75) 100%),
+                linear-gradient(180deg, rgba(10, 14, 26, 0.3) 0%, rgba(10, 14, 26, 0.9) 100%);
+            z-index: 1;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: 
+                radial-gradient(ellipse 80% 50% at 20% 40%, rgba(212, 175, 55, 0.15), transparent 50%),
+                radial-gradient(ellipse 60% 40% at 80% 60%, rgba(74, 144, 226, 0.1), transparent 50%);
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .hero-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.3fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            position: relative;
+            z-index: 3;
+        }
+
+        .hero-content h1 {
+            font-family: var(--font-heading);
+            font-size: clamp(2rem, 4.5vw, 3.4rem);
+            font-weight: 700;
+            color: white;
+            line-height: 1.15;
+            margin-bottom: 1.25rem;
+            letter-spacing: -0.03em;
+        }
+
+        .hero-content .highlight {
+            background: linear-gradient(135deg, #D4AF37 0%, #F4E4A1 50%, #D4AF37 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 3s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { background-position: 0% center; }
+            50% { background-position: 100% center; }
+        }
+
+        .hero-content .subline {
+            display: block;
+            font-size: 0.65em;
+            opacity: 0.85;
+            font-weight: 500;
+            margin-top: 0.5rem;
+            color: rgba(255,255,255,0.9);
+        }
+
+        .hero-content p {
+            font-family: var(--font-body);
+            font-size: 1.15rem;
+            font-weight: 400;
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        /* Trust Badges - optimiert */
+        .trust-badges {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.25rem;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(10px);
+            padding: 0.45rem 0.9rem;
+            border-radius: 100px;
+            color: white;
+            font-family: var(--font-body);
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            border: 1px solid rgba(255,255,255,0.12);
+        }
+
+        .badge-icon {
+            width: 16px;
+            height: 16px;
+            background: #22C55E;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.65rem;
+        }
+
+        /* Scarcity Badge mit Pulse */
+        .badge-scarcity {
+            background: rgba(212,175,55,0.15) !important;
+            border-color: rgba(212,175,55,0.4) !important;
+            animation: scarcityPulse 2s ease-in-out infinite;
+        }
+
+        .badge-scarcity .badge-icon {
+            background: #D4AF37;
+        }
+
+        .badge-scarcity span:last-child {
+            color: #F4E4A1;
+            font-weight: 700;
+        }
+
+        @keyframes scarcityPulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(212,175,55,0.4); }
+            50% { box-shadow: 0 0 0 6px rgba(212,175,55,0); }
+        }
+
+        /* CTA Primary - größer und auffälliger */
+        .cta-primary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #D4AF37, #F4E4A1);
+            color: #0A0E1A;
+            padding: 1rem 2.5rem;
+            border-radius: 100px;
+            text-decoration: none;
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 1.05rem;
+            letter-spacing: -0.01em;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 8px 30px rgba(212, 175, 55, 0.4);
+            margin-bottom: 0.6rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: ctaShine 3s ease-in-out infinite;
+        }
+
+        @keyframes ctaShine {
+            0% { left: -100%; }
+            50%, 100% { left: 100%; }
+        }
+
+        .cta-primary:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 15px 45px rgba(212, 175, 55, 0.5);
+        }
+
+        .cta-primary span {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Urgency Text */
+        .urgency-text {
+            color: #F4E4A1;
+            font-family: var(--font-body);
+            font-size: 0.8rem;
+            font-weight: 600;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        /* Profit Display - mit Glow */
+        .dashboard-preview {
+            background: rgba(10, 14, 26, 0.7);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 1.25rem;
+            border: 1px solid rgba(34, 197, 94, 0.2);
+            box-shadow: 
+                0 25px 50px rgba(0,0,0,0.4),
+                0 0 40px rgba(34, 197, 94, 0.1);
+        }
+
+        .profit-display {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(26, 31, 58, 0.95));
+            padding: 1.5rem;
+            border-radius: 14px;
+            text-align: center;
+            border: 1px solid rgba(34, 197, 94, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profit-display::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #22C55E, transparent);
+        }
+
+        .profit-label {
+            color: rgba(255,255,255,0.7);
+            font-family: var(--font-body);
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .profit-amount {
+            font-family: var(--font-heading);
+            font-size: 2.75rem;
+            font-weight: 700;
+            color: #22C55E;
+            letter-spacing: -0.03em;
+            text-shadow: 0 0 30px rgba(34, 197, 94, 0.5);
+            line-height: 1;
+        }
+
+        .profit-subtext {
+            color: rgba(255,255,255,0.6);
+            font-family: var(--font-body);
+            font-size: 0.8rem;
+            margin-top: 0.4rem;
+        }
+
+        .profit-subtext span {
+            color: #22C55E;
+            font-weight: 700;
+        }
+
+        /* Secondary CTA unter Profit */
+        .cta-secondary {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #D4AF37, #F4E4A1);
+            color: #0A0E1A;
+            padding: 0.9rem 2rem;
+            border-radius: 100px;
+            text-decoration: none;
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 0.95rem;
+            box-shadow: 0 10px 35px rgba(212, 175, 55, 0.35);
+            margin-top: 1rem;
+            width: 100%;
+            max-width: 280px;
+            margin-left: auto;
+            margin-right: auto;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-secondary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: ctaShine 3s ease-in-out infinite 1.5s;
+        }
+
+        .cta-secondary::after {
+            content: "→";
+            font-size: 1.1rem;
+        }
+
+        .cta-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 45px rgba(212, 175, 55, 0.45);
+        }
+
+        /* Floating CTA - Desktop hidden */
+        @media (min-width: 769px) {
+            .cta-secondary {
+                display: none;
+            }
+        }
+
+        /* ========== MOBILE OPTIMIERUNG ========== */
+        @media (max-width: 768px) {
+            /* Mobile: nur 2 Trust Badges anzeigen */
+            .trust-badges .badge:last-child {
+                display: none;
+            }
+
+            html, body {
+                height: auto !important;
+                overflow-x: hidden !important;
+            }
+/* Header CTA auf Mobile ausblenden - fokus auf Hauptinhalt */
+            .cta-header {
+                display: none !important;
+            }
+
+            .nav-container {
+                padding: 0.8rem 1rem;
+                min-height: 56px;
+            }
+
+            .hero {
+                display: flex !important;
+                flex-direction: column;
+                justify-content: flex-start;
+                min-height: auto !important;
+                height: auto !important;
+                padding: 85px 1.25rem 2.5rem 1.25rem;
+                margin: 0;
+            }
+
+            .hero-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 1.5rem;
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .hero-visual {
+                order: 2;
+                width: 100%;
+                max-width: 100%;
+                margin: 0 auto;
+            }
+
+            .hero-content {
+                order: 1;
+            }
+
+            .hero-content h1 {
+                font-size: 1.85rem;
+                margin-bottom: 0.75rem;
+                line-height: 1.2;
+            }
+
+            .hero-content .subline {
+                font-size: 0.72em;
+                margin-top: 0.5rem;
+            }
+
+            .hero-content p {
+                font-size: 1rem;
+                margin-bottom: 1.25rem;
+                line-height: 1.5;
+            }
+
+            .trust-badges {
+                justify-content: center;
+                margin-bottom: 1.25rem;
+                gap: 0.6rem;
+            }
+
+            .badge {
+                padding: 0.5rem 0.95rem;
+                font-size: 0.78rem;
+            }
+
+            .badge-icon {
+                width: 17px;
+                height: 17px;
+                font-size: 0.62rem;
+            }
+
+            .cta-primary {
+                width: 100%;
+                max-width: 320px;
+                padding: 1.1rem 2.25rem;
+                margin-bottom: 0.6rem;
+                font-size: 1.05rem;
+            }
+
+            .urgency-text {
+                font-size: 0.8rem;
+                margin-bottom: 0;
+            }
+
+            /* Profit Display */
+            .dashboard-preview {
+                padding: 0.85rem;
+                border-radius: 18px;
+            }
+
+            .profit-display {
+                padding: 1.1rem;
+                border-radius: 14px;
+            }
+
+            .profit-label {
+                font-size: 0.65rem;
+                margin-bottom: 0.4rem;
+            }
+
+            .profit-amount {
+                font-size: 2.2rem;
+            }
+
+            .profit-subtext {
+                font-size: 0.8rem;
+                margin-top: 0.35rem;
+            }
+
+            /* CTA unter Profit */
+            .cta-secondary {
+                display: flex;
+                margin-top: 1.25rem;
+                padding: 1rem 2rem;
+                font-size: 1rem;
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero {
+                padding: 80px 1rem 2.25rem 1rem;
+            }
+
+            .hero-content h1 {
+                font-size: 1.7rem;
+            }
+
+            .hero-container {
+                gap: 1.25rem;
+            }
+
+            .trust-badges {
+                gap: 0.5rem;
+            }
+
+            .badge {
+                padding: 0.45rem 0.85rem;
+                font-size: 0.75rem;
+            }
+
+            .profit-amount {
+                font-size: 2rem;
+            }
+
+            .cta-primary {
+                padding: 1rem 2rem;
+                font-size: 1rem;
+            }
+
+            .cta-secondary {
+                padding: 0.9rem 1.75rem;
+                font-size: 0.95rem;
+            }
+        }
+
+        @media (max-width: 375px) {
+            .hero {
+                padding: 75px 0.9rem 2.1rem 0.9rem;
+            }
+
+            .hero-content h1 {
+                font-size: 1.55rem;
+            }
+
+            .hero-content p {
+                font-size: 0.95rem;
+            }
+
+            .badge {
+                padding: 0.4rem 0.75rem;
+                font-size: 0.72rem;
+            }
+
+            .profit-amount {
+                font-size: 1.85rem;
+            }
+        }
+    
+        /* Footer Disclaimer */
+        .disclaimer {
+            text-align: center;
+            font-size: 12px;
+            color: rgba(255,255,255,0.45);
+            padding: 1.5rem 1rem 2rem;
+            line-height: 1.4;
+        }
+</style>
+</head>
+<body>
+    <header class="header">
+        <div class="nav-container"></div>
+        <a href="https://taap.it/y87nsgc" class="cta-header">Mehr erfahren →</a>
+    </header>
+
+    <section class="hero">
+        <div class="hero-bg" aria-hidden="true"></div>
+        <div class="hero-overlay"></div>
+        
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1>
+                    <span class="highlight">Trade mit bis zu €200.000</span><br>
+                    ohne eigenes Geld zu riskieren.<br>
+                    <span class="subline">KI handelt für dich: Vollautomatisch</span>
+                </h1>
+                <p></p>
+
+                <div class="trust-badges">
+                    <div class="badge">
+                        <span class="badge-icon">✓</span>
+                        <span>Verifizierte Nutzerbasis</span>
+                    </div>
+                    <div class="badge">
+                        <span class="badge-icon">★</span>
+                        <span>4,8 ★ Trustpilot</span>
+                    </div>
+                    <div class="badge badge-scarcity">
+                        <span class="badge-icon">⚡</span>
+                        <span>Limitierte Verfügbarkeit</span>
+                    </div>
+                </div>
+
+                <a href="https://taap.it/y87nsgc" class="cta-primary"><span>Zugang sichern</span></a>
+                <div class="urgency-text">⏳ Zugang wird regelmäßig geschlossen</div>
+            </div>
+
+            <div class="hero-visual">
+                <div class="dashboard-preview">
+                    <div class="profit-display">
+                        <div class="profit-label">Durchschnittlicher Monatsgewinn</div>
+                        <div class="profit-amount" id="profit">€4.731</div>
+                        <div class="profit-subtext">bei €200K Kapital · <span>+2.37% p.M.</span></div>
+                    </div>
+                </div>
+                
+                <a href="https://taap.it/y87nsgc" class="cta-secondary">
+                    <span>Kostenlos starten</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <script>
+    (function() {
+        function animateValue(el, target, duration) {
+            if (!el) return;
+            var start = 0;
+            var startTime = null;
+            function step(timestamp) {
+                if (!startTime) startTime = timestamp;
+                var progress = Math.min((timestamp - startTime) / duration, 1);
+                var eased = 1 - Math.pow(1 - progress, 3);
+                var current = Math.round(start + (target - start) * eased);
+                el.textContent = '€' + current.toLocaleString('de-DE');
+                if (progress < 1) {
+                    requestAnimationFrame(step);
+                }
+            }
+            requestAnimationFrame(step);
+        }
+
+        function init() {
+            var profitEl = document.getElementById('profit');
+            if (profitEl) {
+                animateValue(profitEl, 4731, 2000);
+            }
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
+    })();
+    </script>
+
+    <!-- Lead Tracking -->
+    <script>
+    (function () {
+      function wireMetaLeadTracking() {
+        if (typeof fbq !== 'function') return;
+        var ctaLinks = document.querySelectorAll('a[href^="https://taap.it/"], a[href^="http://taap.it/"]');
+        if (!ctaLinks || !ctaLinks.length) return;
+        ctaLinks.forEach(function (link) {
+          link.addEventListener('click', function (e) {
+            try {
+              if (link.dataset.fbpTracked === '1') return;
+              link.dataset.fbpTracked = '1';
+              e.preventDefault();
+              fbq('track', 'Lead');
+              var url = link.href;
+              setTimeout(function () {
+                window.location.href = url;
+              }, 300);
+            } catch (err) {
+              window.location.href = link.href;
+            }
+          }, { passive: false });
+        });
+      }
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', wireMetaLeadTracking);
+      } else {
+        wireMetaLeadTracking();
+      }
+    })();
+    </script>
+
+    
+
+<footer style="
+    text-align:center;
+    font-size:12px;
+    color:rgba(255,255,255,0.45);
+    padding:1.5rem 1rem;
+    line-height:1.4;
+">
+Diese Seite ist kein Bestandteil der Facebook-Website oder von Facebook Inc.
+Darüber hinaus wird diese Seite in keiner Weise von Facebook unterstützt.
+FACEBOOK ist eine eingetragene Marke von Facebook, Inc.
+</footer>
+
+</body>
+</html>
